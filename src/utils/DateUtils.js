@@ -142,6 +142,7 @@ export default {
    *
    * @param {String} date
    * @return {Date} (parsed date)
+   * inspired by https://github.com/fengyuanchen/datepicker
    */
   parseDate (date, format) {
     format = this.parseFormat(format)
@@ -158,9 +159,6 @@ export default {
     } else if (this.isString(date)) {
       parts = date.match(/\d+/g) || []
     }
-
-    console.log(format)
-    console.log(parts)
 
     date = new Date()
     year = date.getFullYear()
