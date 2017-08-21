@@ -323,6 +323,7 @@ export default {
     input (e) {
       this.userInput = e.target.value
       this.setPageDate(this.userInput)
+      this.$emit('input', this.userInput)
     },
     /**
      * Close all calendar layers
