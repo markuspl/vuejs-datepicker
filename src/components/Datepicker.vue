@@ -7,14 +7,15 @@
         :class="[ inputClass, { 'form-control' : bootstrapStyling } ]"
         :name="name"
         :id="id"
-        @click="showCalendar"
+        @focus="showCalendar"
         :value="formattedValue"
         :placeholder="placeholder"
         :clear-button="clearButton"
         :disabled="disabledPicker"
         :required="required"
         :readonly="readonly"
-        @input="input">
+        @input="input"
+        @blur="blur">
       <span class="vdp-datepicker__clear-button" :class="{'input-group-addon' : bootstrapStyling}" v-if="clearButton && selectedDate" @click="clearDate()"><i :class="clearButtonIcon"><span v-if="calendarButtonIcon.length === 0">&times;</span></i></span>
     </div>
 
@@ -323,6 +324,10 @@ export default {
     input (e) {
       this.userInput = e.target.value
       this.setPageDate(this.userInput)
+    },
+    blur () {
+      this.$emit('input', this.selectedDate)
+      this.close()
     },
     /**
      * Close all calendar layers
