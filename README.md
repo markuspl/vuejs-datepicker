@@ -82,6 +82,8 @@ Inline always open version
 | disabled-picker       | Boolean         | false       | If true, disable Datepicker on screen    |
 | required              | Boolean         | false       | Sets html required attribute on input    |
 | day-view-only         | Boolean         | false       | If true, month and year views won't show |
+| readonly              | Boolean         | true        | If false, input accepts user input       |
+| start-date            | Date\|String    |             | Initial Date to be shown in Datepicker   |
 
 ## Events
 

@@ -13,7 +13,8 @@
         :clear-button="clearButton"
         :disabled="disabledPicker"
         :required="required"
-        readonly>
+        :readonly="readonly"
+        @input="input">
       <span class="vdp-datepicker__clear-button" :class="{'input-group-addon' : bootstrapStyling}" v-if="clearButton && selectedDate" @click="clearDate()"><i :class="clearButtonIcon"><span v-if="calendarButtonIcon.length === 0">&times;</span></i></span>
     </div>
 
@@ -154,6 +155,15 @@ export default {
     dayViewOnly: {
       type: Boolean,
       default: false
+    },
+    startDate: {
+      validator: function (val) {
+        return val instanceof Date || typeof val === 'string'
+      }
+    },
+    readonly: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -179,8 +189,12 @@ export default {
       /*
        * Positioning
        */
-      calendarHeight: 0
+      calendarHeight: 0,
+      userInput: ''
     }
+  },
+  created () {
+    if (this.startDate) this.setPageDate(this.startDate)
   },
   watch: {
     value (value) {
@@ -192,6 +206,9 @@ export default {
   },
   computed: {
     formattedValue () {
+      if (this.userInput) {
+        return this.userInput
+      }
       if (!this.selectedDate) {
         return null
       }
@@ -303,6 +320,10 @@ export default {
     }
   },
   methods: {
+    input (e) {
+      this.userInput = e.target.value
+      this.setPageDate(this.userInput)
+    },
     /**
      * Close all calendar layers
      */
@@ -395,6 +416,7 @@ export default {
       if (day.isDisabled) {
         return false
       }
+      this.userInput = ''
       this.setDate(day.timestamp)
       if (this.isInline) {
         return this.showDayCalendar()
@@ -777,6 +799,10 @@ export default {
       if (!date) {
         date = new Date()
       }
+      if (typeof date === 'string') {
+        date = DateUtils.isValidDate(new Date(date)) ? new Date(date) : DateUtils.parseDate(date, this.format)
+      }
+      this.selectedDate = date
       this.pageDate = new Date(date.getFullYear(), date.getMonth(), 1, date.getHours(), date.getMinutes()).getTime()
     },
 

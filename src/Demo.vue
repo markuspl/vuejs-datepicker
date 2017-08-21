@@ -94,6 +94,14 @@
       </code>
     </div>
 
+    <div class="example">
+      <h3>Readonly false and start-date and DE</h3>
+      <datepicker placeholder="Select Date" :readonly="false" start-date="1987-07-29" format="dd.MM.yyyy"></datepicker>
+      <code>
+          &lt;datepicker placeholder="Select Date"&gt;&lt;/datepicker&gt;
+      </code>
+    </div>
+
   </div>
 </template>
 

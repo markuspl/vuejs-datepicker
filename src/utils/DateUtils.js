@@ -135,6 +135,117 @@ export default {
       start = new Date(start).setDate(new Date(start).getDate() + 1)
     }
     return dates
+  },
+
+  /**
+   * Parse a date string with the set date format
+   *
+   * @param {String} date
+   * @return {Date} (parsed date)
+   */
+  parseDate (date, format) {
+    format = this.parseFormat(format)
+    var parts = []
+    var length
+    var year
+    var day
+    var month
+    var val
+    var i
+
+    if (this.isDate(date)) {
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate())
+    } else if (this.isString(date)) {
+      parts = date.match(/\d+/g) || []
+    }
+
+    console.log(format)
+    console.log(parts)
+
+    date = new Date()
+    year = date.getFullYear()
+    day = date.getDate()
+    month = date.getMonth()
+    length = format.parts.length
+
+    if (parts.length === length) {
+      for (i = 0; i < length; i++) {
+        val = parseInt(parts[i], 10) || 1
+
+        switch (format.parts[i]) {
+          case 'dd':
+          case 'd':
+            day = val
+            break
+
+          case 'mm':
+          case 'm':
+            month = val - 1
+            break
+
+          case 'yy':
+            year = 2000 + val
+            break
+
+          case 'yyyy':
+            year = val
+            break
+
+          // No default
+        }
+      }
+    }
+
+    return new Date(year, month, day)
+  },
+  parseFormat (format) {
+    var source = String(format).toLowerCase()
+    var parts = source.match(/(y|m|d)+/g)
+    var length
+    var i
+
+    if (!parts || parts.length === 0) {
+      throw new Error('Invalid date format.')
+    }
+
+    format = {
+      source: source,
+      parts: parts
+    }
+
+    length = parts.length
+
+    for (i = 0; i < length; i++) {
+      switch (parts[i]) {
+        case 'dd':
+        case 'd':
+          format.hasDay = true
+          break
+
+        case 'mm':
+        case 'm':
+          format.hasMonth = true
+          break
+
+        case 'yyyy':
+        case 'yy':
+          format.hasYear = true
+          break
+
+        // No default
+      }
+    }
+
+    return format
+  },
+  typeOf (obj) {
+    return toString.call(obj).slice(8, -1).toLowerCase()
+  },
+  isString (str) {
+    return typeof str === 'string'
+  },
+  isDate (date) {
+    return this.typeOf(date) === 'date'
   }
 
 }
