@@ -14,8 +14,7 @@
         :disabled="disabledPicker"
         :required="required"
         :readonly="readonly"
-        @input="input"
-        @blur="blur">
+        @input="input">
       <span class="vdp-datepicker__clear-button" :class="{'input-group-addon' : bootstrapStyling}" v-if="clearButton && selectedDate" @click="clearDate()"><i :class="clearButtonIcon"><span v-if="calendarButtonIcon.length === 0">&times;</span></i></span>
     </div>
 
@@ -324,10 +323,6 @@ export default {
     input (e) {
       this.userInput = e.target.value
       this.setPageDate(this.userInput)
-    },
-    blur () {
-      this.$emit('input', this.selectedDate)
-      this.close()
     },
     /**
      * Close all calendar layers
