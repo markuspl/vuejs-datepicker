@@ -194,7 +194,10 @@ export default {
     }
   },
   created () {
-    if (this.startDate) this.setPageDate(this.startDate)
+    if (this.startDate) {
+      this.setPageDate(this.startDate)
+      this.selectedDate = this.startDate
+    }
   },
   watch: {
     value (value) {
@@ -803,7 +806,6 @@ export default {
       if (typeof date === 'string') {
         date = DateUtils.isValidDate(new Date(date)) ? new Date(date) : DateUtils.parseDate(date, this.format)
       }
-      this.selectedDate = date
       this.pageDate = new Date(date.getFullYear(), date.getMonth(), 1, date.getHours(), date.getMinutes()).getTime()
     },
 
