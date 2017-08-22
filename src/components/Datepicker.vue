@@ -194,11 +194,26 @@ export default {
     }
   },
   created () {
-    if (this.disabled) {
-      this.setPageDate(this.disabled.from)
-    } else if (this.startDate) {
+    if (this.startDate) {
       this.setPageDate(this.startDate)
       this.selectedDate = this.startDate
+    }
+    if (this.disabled) {
+      let now = new Date().getTime()
+      let to = this.disabled.to && this.disabled.to.getTime()
+      let from = this.disabled.from && this.disabled.from.getTime()
+      if (to && from) {
+        if (to < now && from < now) {
+          this.setPageDate(this.disabled.from)
+        }
+        if (to > now && from > now) {
+          this.setPageDate(this.disabled.to)
+        }
+      } else if (from) {
+        this.setPageDate(this.disabled.from)
+      } else {
+        this.setPageDate(this.disabled.to)
+      }
     }
   },
   watch: {
