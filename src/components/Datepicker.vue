@@ -194,7 +194,9 @@ export default {
     }
   },
   created () {
-    if (this.startDate) {
+    if (this.disabled) {
+      this.setPageDate(this.disabled.from)
+    } else if (this.startDate) {
       this.setPageDate(this.startDate)
       this.selectedDate = this.startDate
     }
