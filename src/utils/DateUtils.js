@@ -160,6 +160,10 @@ export default {
       parts = date.match(/\d+/g) || []
     }
 
+    if (parts.length === 0) {
+      return
+    }
+
     date = new Date()
     year = date.getFullYear()
     day = date.getDate()
