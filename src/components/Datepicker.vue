@@ -362,6 +362,7 @@ export default {
         this.$emit('input', fullDate)
       } else {
         this.$emit('input', '')
+        this.selectedDate = ''
       }
     },
     /**
