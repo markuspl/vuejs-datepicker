@@ -344,8 +344,8 @@ export default {
       this.userInput = e.target.value
       this.setPageDate(this.userInput)
 
-      let date = DateUtils.isValidDate(new Date(e.target.value)) ? new Date(e.target.value) : DateUtils.parseDate(e.target.value, this.format)
-
+      let date = DateUtils.parseDate(e.target.value, this.format)
+      console.log(date, this.format)
       this.selectedDate = date
       this.$emit('input', this.userInput)
     },
