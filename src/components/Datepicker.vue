@@ -341,12 +341,17 @@ export default {
   },
   methods: {
     input (e) {
-      this.userInput = e.target.value
-      let date = DateUtils.parseDate(e.target.value, this.format)
-      let fullDate = date.getMonth() + 1 + '.' + date.getDate() + '.' + date.getFullYear()
-      this.setPageDate(fullDate)
-      this.selectedDate = date
-      this.$emit('input', fullDate)
+      console.log(e.target.value)
+      if (e.target.value !== '') {
+        this.userInput = e.target.value
+        let date = DateUtils.parseDate(e.target.value, this.format)
+        let fullDate = date.getMonth() + 1 + '.' + date.getDate() + '.' + date.getFullYear()
+        this.setPageDate(fullDate)
+        this.selectedDate = date
+        this.$emit('input', fullDate)
+      } else {
+        this.$emit('input', '')
+      }
     },
     /**
      * Close all calendar layers
@@ -504,7 +509,7 @@ export default {
     getPageDecade () {
       let date = new Date(this.pageDate)
       let sD = Math.floor(date.getFullYear() / 10) * 10
-      return sD + '\'s'
+      return sD
     },
 
     previousMonth () {
