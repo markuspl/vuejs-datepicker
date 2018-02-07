@@ -14,6 +14,7 @@
         :disabled="disabledPicker"
         :required="required"
         :readonly="readonly"
+        :open-date="openDate"
         @input="input">
       <span class="vdp-datepicker__clear-button" :class="{'input-group-addon' : bootstrapStyling}" v-if="clearButton && selectedDate" @click="clearDate()"><i :class="clearButtonIcon"><span v-if="calendarButtonIcon.length === 0">&times;</span></i></span>
     </div>
@@ -105,6 +106,11 @@ export default {
       type: String,
       default: 'en'
     },
+    openDate: {
+      validator: function (val) {
+        return val === null || val instanceof Date || typeof val === 'string'
+      }
+    },
     fullMonthName: {
       type: Boolean,
       default: false
@@ -167,7 +173,9 @@ export default {
     }
   },
   data () {
+    const startDate = this.openDate ? new Date(this.openDate) : new Date()
     return {
+      pageTimestamp: startDate.setDate(1),
       /*
        * Vue cannot observe changes to a Date Object so date must be stored as a timestamp
        * This represents the first day of the current viewing month
@@ -219,6 +227,9 @@ export default {
   watch: {
     value (value) {
       this.setValue(value)
+    },
+    openDate () {
+      this.setPageDate()
     },
     initialView () {
       this.setInitialView()
@@ -826,7 +837,11 @@ export default {
 
     setPageDate (date) {
       if (!date) {
-        date = new Date()
+        if (this.openDate) {
+          date = new Date(this.openDate)
+        } else {
+          date = new Date()
+        }
       }
       if (typeof date === 'string') {
         date = DateUtils.isValidDate(new Date(date)) ? new Date(date) : DateUtils.parseDate(date, this.format)
