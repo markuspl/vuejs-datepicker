@@ -363,6 +363,7 @@ export default {
       } else {
         this.$emit('input', '')
         this.selectedDate = ''
+        this.userInput = ''
       }
     },
     /**
