@@ -352,7 +352,6 @@ export default {
   },
   methods: {
     input (e) {
-      console.log(e.target.value)
       if (e.target.value !== '') {
         this.userInput = e.target.value
         let date = DateUtils.parseDate(e.target.value, this.format)
