@@ -521,7 +521,9 @@ export default {
     getPageDecade () {
       let date = new Date(this.pageDate)
       let sD = Math.floor(date.getFullYear() / 10) * 10
-      return sD
+      let eD = (Math.floor(date.getFullYear() / 10) * 10) + 9
+      // Return StartYear an EndYear
+      return sD + ' - ' + eD
     },
 
     previousMonth () {
