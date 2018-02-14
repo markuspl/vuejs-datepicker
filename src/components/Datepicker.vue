@@ -353,7 +353,7 @@ export default {
   },
   methods: {
     input (e) {
-      console.log(/^[0-9.]*$/.test(e.target.value))
+      console.log(e.target.value)
       if (/^[0-9.]*$/.test(e.target.value)) {
         if (e.target.value !== '') {
           this.userInput = e.target.value
@@ -370,7 +370,12 @@ export default {
           this.selectedDate = ''
           this.userInput = ''
         }
+      } else if (e.target.value === '') {
+        this.$emit('input', '')
+        this.selectedDate = ''
+        this.userInput = ''
       } else {
+        this.$emit('input', e.target.value)
         this.selectedDate = ''
         this.userInput = e.target.value
       }
