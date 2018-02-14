@@ -353,13 +353,9 @@ export default {
   },
   methods: {
     input (e) {
-      console.log(e.target.value)
       if (/^[0-9.]*$/.test(e.target.value)) {
         if (e.target.value !== '') {
           this.userInput = e.target.value
-          console.log(this.userInput)
-          moment(this.userInput).isValid()
-          console.log(/^[0-9.]*$/.test(this.userInput))
           let date = DateUtils.parseDate(e.target.value, this.format)
           let fullDate = date.getMonth() + 1 + '.' + date.getDate() + '.' + date.getFullYear()
           this.setPageDate(fullDate)
