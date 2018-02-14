@@ -88,6 +88,7 @@
 <script>
 import DateUtils from '@/utils/DateUtils.js'
 import DateLanguages from '@/utils/DateLanguages.js'
+import moment from 'moment'
 
 export default {
   props: {
@@ -352,17 +353,26 @@ export default {
   },
   methods: {
     input (e) {
-      if (e.target.value !== '') {
-        this.userInput = e.target.value
-        let date = DateUtils.parseDate(e.target.value, this.format)
-        let fullDate = date.getMonth() + 1 + '.' + date.getDate() + '.' + date.getFullYear()
-        this.setPageDate(fullDate)
-        this.selectedDate = date
-        this.$emit('input', fullDate)
+      if (/^[0-9.]*$/.test(this.userInput)) {
+        if (e.target.value !== '') {
+          this.userInput = e.target.value
+          console.log(this.userInput)
+          moment(this.userInput).isValid()
+          console.log(/^[0-9.]*$/.test(this.userInput))
+          let date = DateUtils.parseDate(e.target.value, this.format)
+          let fullDate = date.getMonth() + 1 + '.' + date.getDate() + '.' + date.getFullYear()
+          this.setPageDate(fullDate)
+          this.selectedDate = date
+          this.$emit('input', fullDate)
+        } else {
+          this.$emit('input', '')
+          this.selectedDate = ''
+          this.userInput = ''
+        }
       } else {
-        this.$emit('input', '')
+        this.$emit('input', e.target.value)
         this.selectedDate = ''
-        this.userInput = ''
+        this.userInput = e.target.value
       }
     },
     /**
