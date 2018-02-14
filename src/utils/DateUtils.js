@@ -237,7 +237,7 @@ export default {
     return format
   },
   typeOf (obj) {
-    return toString.call(obj).slice(8, -1).toLowerCase()
+    return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
   },
   isString (str) {
     return typeof str === 'string'
