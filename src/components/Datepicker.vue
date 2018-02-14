@@ -352,7 +352,7 @@ export default {
   },
   methods: {
     input (e) {
-      if (/^[0-9.]*$/.test(e.target.value)) {
+      if (/\d{2}|\d{2}(\.|-)\d{1}(\.|-)\d{4}/.test(e.target.value)) {
         if (e.target.value !== '') {
           this.userInput = e.target.value
           let date = DateUtils.parseDate(e.target.value, this.format)
