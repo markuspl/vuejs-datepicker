@@ -371,7 +371,6 @@ export default {
           this.userInput = ''
         }
       } else {
-        this.$emit('input', e.target.value)
         this.selectedDate = ''
         this.userInput = e.target.value
       }
