@@ -353,7 +353,8 @@ export default {
   },
   methods: {
     input (e) {
-      if (/^[0-9.]*$/.test(this.userInput)) {
+      console.log(/^[0-9.]*$/.test(e.target.value))
+      if (/^[0-9.]*$/.test(e.target.value)) {
         if (e.target.value !== '') {
           this.userInput = e.target.value
           console.log(this.userInput)
